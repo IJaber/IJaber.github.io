@@ -15,7 +15,7 @@
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "en-UK"
+locale                   : "en-US"
 title                    : "Issam Jaber"
 title_separator          : "-"
 name                     : "Issam Jaber"
@@ -102,14 +102,14 @@ analytics:
 # Site Author
 author:
   name             : "Issam Jaber"
-  avatar           : "/Users/Jaber/Documents/CV/AV12"
+  avatar           : "/Users/Jaber/Documents/CV/Av12.jpg"
   bio              : "Data Science Portfolio"
   location         : "London, UK"
   email            : "ijaber7@hotmail.com"
   links:
-    - label: "Linkedin"
-      icon: "https://www.linkedin.com/in/issam-jaber-562246112/"
-      # url: mailto:your.name@email.com
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: mailto:ijaber7@hotmail.com
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -120,11 +120,14 @@ author:
       icon: "fab fa-fw fa-facebook-square"
       # url: "https://facebook.com/"
     - label: "GitHub"
-      icon: "https://github.com/IJaber"
-      # url: "https://github.com/"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/IJaber"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/issam-jaber-562246112/"
 
 # Site Footer
 footer:
@@ -288,11 +291,10 @@ defaults:
       comments: # true
       share: true
       related: true
-
-  # _pages
-  - scope:
-      path: ""
-      type: pages
-    values:
-      layout: single
-      author_profile: true
+ # _pages
+ - scope:
+     path: ""
+     type: pages
+   values:
+     layout: single
+     author_profile: true
