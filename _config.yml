@@ -86,7 +86,7 @@ analytics:
 # Site Author
 author:
   name             : "Issam Jaber"
-  avatar           : "/images/Av12.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/images/IMG_2054.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Data Science Portfolio"
   location         : "London, UK"
   email            : "ijaber7@hotmail.com"
