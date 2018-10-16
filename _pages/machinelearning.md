@@ -1,9 +1,8 @@
 ---
 layout: posts
-permalink: /machine-learning/
-title: "Machine Learning Posts by Tags"
+permalink: /projects/
+title: "Projects"
 author_profile: true
 header:
-  image: "/images/fort point.png"
+  image: "/images/setup.jpg"
 ---
-
