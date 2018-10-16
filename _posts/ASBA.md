@@ -15,7 +15,6 @@ By examining relevant literature, it was determined that previous Aspect Detecti
 ### NOA preprocessing approach
 Adequate pre-processing is necessary to ensure the LDA model results in coherent aspects. The Figure below gives an outline of the NOA-LDA pre-processing method for Aspect Detection.
 ![NOA](/images/NOApre.jpg)
-R code block:
 ```r
 library(RTextTools)
 library(topicmodels)
