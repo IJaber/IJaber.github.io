@@ -14,9 +14,10 @@ In this project, we proposed a novel approach to Aspect-Based Sentiment Analysis
 By examining relevant literature, it was determined that previous Aspect Detection methods were lacking in either coherence or versatility. Thus, we proposed a NOA to the topic modelling technique LDA (NOA-LDA) for Aspect Detection. We showed through our testing that a NOA-LDA system is a superior method compared with a raw corpus LDA for Aspect Detection; it produced more accurate and coherent aspects. This was demonstrated with two examples: Hotel reviews, and Headphone reviews. Where both examples had considerably greater coherence with a NOA-LDA system than LDA with all POS. This confirms the work by Hu and Liu (2004) whose Aspect Detection approach found frequently occurring nouns and noun phrases, due to their assumption that vocabulary tends to converge when various aspects of a product are discussed. Our approach successfully extended upon the work by Titov and McDonald (2008), and Lin and He (2009) who used topic modelling to discover aspects. We managed to separate aspect words from opinion words through the NOA-LDA, whereas previous methods included both opinion words and aspect words in their approach, resulting in the topic model not being very accurate.  The NOA-LDA system was also significantly more computationally efficient. In terms of the scalability, run time for the NOA-LDA system was significantly faster than with a raw LDA. This was also demonstrated in both examples, the Hotel reviews performed approximately twice as fast with the NOA-LDA system, and the Headphone reviews performed approximately 15 times faster. The NOA-LDA system was also capable of performing across various domains. We showed this by selecting two examples from different domains.
 ### NOA preprocessing approach
 Adequate pre-processing is necessary to ensure the LDA model results in coherent aspects. The Figure below gives an outline of the NOA-LDA pre-processing method for Aspect Detection.
-![NOA](images/NOApre.jpg)
-#### R code block:
-```library(RTextTools)
+![NOA](/images/NOApre.jpg)
+R code block:
+```r
+library(RTextTools)
 library(topicmodels)
 library(dplyr)
 library(tm)
