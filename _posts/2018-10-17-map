@@ -1,0 +1,96 @@
+---
+title: "UK Traffic Accidents"
+date: 2018-10-17
+---
+[Full Project](/files/LDP.pdf)
+## Project Aim
+Fear of being in a traffic accident is a major worry for many. Those with driving phobia, find it difficult to adjust in a modern world that revolves around travel. Many people in the UK share this concern and it’s not surprising with the RAC revealing that “There were 24,101 people seriously injured in reported road traffic accidents in 2016”, (RAC, 2018).
+In our paper we attempt to aid those worried about their safety when travelling by road, we attempt to find the specific conditions that result in dangerous accidents as well as identifying areas where dangerous accidents occur more frequently. The outcome of the report could also benefit the UK government, Transport for London, Environmental Health Association and car manufacturers. Various applications were utilized in carrying out this research. We will use data surrounding traffic accidents in the UK, dating from 2005-2015.
+My main contribution to this project was to create an app for users to be able to search their location or where they want to visit. From the app can then learn if there were dangerous accidents that happened nearby. This will hopefully provide peace of mind for those worried about travelling to a new area in the UK.
+## Creating the App
+The purpose of creating this map is to produce a user-friendly tool capable of displaying the exact location of each fatal and severe accident. I used leaflet to create the map and then shiny to present it in a user-friendly manner.
+I first began by cleaning and preparing the traffic accident data.
+```r
+library(readr)
+library(tidyverse)
+library(data.table)
+setwd("~/Desktop/LDP")
+Accidents <- read_csv("~/Desktop/LDP/Accidents0515.csv")
+# remove slight accidents
+Accidents <- Accidents[ which(Accidents$Accident_Severity >= 1 & Accidents$Accident_Severity <= 2), ]
+# only keep important variables
+Accidents <- Accidents[,c(4,5,7,9,10,11,12,13,25,26,27,30)]
+# format year and time
+library(lubridate)
+Accidents$Year = year(as.Date(Accidents$Date, format = "%d/%m/%Y"))
+Accidents$Time = format(strptime(Accidents$Time, format='%H:%M:%S'), '%I:%M %p')
+# only keep years from 2010 onwards
+Accidents <- Accidents[ which(Accidents$Year >= 2010), ]
+# save file
+write_csv(Accidents, "Accidents.csv")
+```
+The next step was to add labels and create the map. We also add a search bar to the map.
+```r
+library(leaflet)
+library(htmltools)
+library(leaflet.extras)
+#labels
+Accidents$label <- paste("<p>", Accidents$Date, "", Accidents$Time, "</p>",
+                         "<p>", Accidents$Severity, "</p>",
+                         "<p>", Accidents$Weather, "</p>")
+#map
+m <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = Accidents$Longitude, lat = Accidents$Latitude,
+             clusterOptions = markerClusterOptions(showCoverageOnHover = FALSE),
+             label = lapply(Accidents$label, HTML)) %>%
+  addSearchOSM()
+```
+The final step is to create the app using shiny.
+```r
+library(shiny)
+library(shinydashboard)
+ui <- dashboardPage(
+  skin = "red",
+  dashboardHeader(title = "Traffic Accidents"),
+  dashboardSidebar(
+    sliderInput("date_range", "Year",
+                min = min(Accidents$Year),
+                max = max(Accidents$Year),
+                value = c(min(Accidents$Year),max(Accidents$Year)),
+                sep = "",
+                step = 1
+    )
+  ),
+  dashboardBody(
+    fluidRow( box(width = 12,
+                  leafletOutput("mymap")
+    ))
+  )
+)
+server <- function(input, output) {
+  data_input <- reactive({
+    Accidents %>%
+      filter(Year >= input$date_range[1]) %>%
+      filter(Year <= input$date_range[2])
+  })
+  output$mymap <- renderLeaflet({
+    data <- data_input()
+    leaflet() %>%
+      addTiles() %>%
+      addMarkers(lng = data$Longitude, lat = data$Latitude,
+                 clusterOptions = markerClusterOptions(showCoverageOnHover = FALSE),
+                 label = lapply(data$label, HTML)) %>%
+      addSearchOSM()
+  })
+}
+shinyApp(ui, server)
+```
+This resulted in the following map shown in three views:
+![1](/files/1.jpg)
+![2](/files/2.jpg)
+![3](/files/3.jpg)
+The visualisation uses clustering to reduce the number of markers seen in one frame. Clicking on a cluster will zoom in to it, creating additional smaller clusters and markers which are colour coded depending on the size of the cluster. The search bar has an autocomplete function, which is handy for users, it also highlights the selected area. Hovering over the selected marker previews the label.
+The year can be changed using the slider on the left panel, the user can select a single year or a range of years.
+
+The full app can be accessed using the following link: https://jaberdata.shinyapps.io/accident_data/
